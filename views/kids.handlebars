@@ -1,0 +1,147 @@
+<html>
+
+
+<div class="row">
+
+    <div class="col-5 mr-2 ">
+
+<div class="row card">
+<b>Sign up</b>
+<table class="table table-hover tablesorter" id="myTable">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Chore</th> 
+                  <th scope="col">Date</th>   
+                  <th scope="col">Amount</th>
+                  <th scope="col"></th> 
+                  <th scope="col"></th> 
+                </tr>
+              </thead>
+              
+              <tbody class="info table-hover">
+ {{#each chore}}
+  	            <tr class="tableRow " data-id="{{this.chore_id}}">
+                    <td> {{this.chore_desc}} </td>
+                    <td> {{this.chore_amt}} </td>
+                    <td><input type="button" user_id={{../user_id}}  class=" float-right" onclick="location.href='/chores/signup/{{this.chore_id}}/{{../user_id}}'" value="Sign up"/></td>
+                </tr>
+
+		
+  {{/each}}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="row card">
+    <b>To Do</b>
+<table class="table table-hover tablesorter" id="myTable">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Chore</th> 
+                  <th scope="col">Date</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col"></th> 
+                  <th scope="col"></th> 
+                </tr>
+              </thead>
+              
+              <tbody class="info table-hover">
+ {{#each pending_chore}}
+  	            <tr class="tableRow " data-id="{{this.chore_id}}">
+                    <td> {{this.chore_desc}} </td>
+                    <td> {{moment this.due_date "MM/DD/YY"}}</td>
+                    <td> {{this.chore_amt}} </td>
+                    <td><input type="button" user_id={{this.chore_id}}  class=" float-right" onclick="location.href='/chores/delete/{{this.chore_id}}/{{this.group_id}}'" value="Complete"/></td>
+                </tr>
+
+		
+  {{/each}}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+    </div>
+
+
+    <div class="col-6 card ">
+
+<table class="table table-hover tablesorter" id="myTable">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Account Number</th> 
+                  <th scope="col">Account Description</th> 
+                  <th scope="col">Balance</th>
+                
+                </tr>
+              </thead>
+              
+              <tbody class="info table-hover">
+ {{#each account}}
+  	<tr class="tableRow " data-id="{{this.account_id}}">
+      <td> {{this.account_id}} </td>
+	    <td> {{this.account_desc}} </td>
+      <td> {{this.balance}} </td>
+
+
+		
+{{/each}}
+
+</tbody>
+
+</table>
+
+    </div>
+
+</div>
+
+<div class="row  " >
+<div class=" card col-2 mr-2 " >
+<b>Request Money</b>  
+<form class=" mt-1 column-5" action="/new/request"  method="POST"  id="new_request_form">
+    <fieldset>
+  
+    <div class="form-group">
+     
+      <input id="user_id" name="user_id" type="hidden" value="{{user_id}}">
+     
+      <label class="col-md-12 control-label">Reason</label>  
+      <input name="request_desc"  class="form-control" type="text"> 
+    
+      <label class="col-md-12 control-label">Amount</label>  
+      <input name="request_amt"  class="form-control" type="money"> 
+    
+
+    
+    </div>
+    <!-- Button -->
+    <div class="form-group">
+    <button type="submit" class="btn btn-primary" >Add </button>
+    </div>
+    
+    </fieldset>
+    </form> 
+
+</div>
+
+
+
+<div class=" card col-9 " >
+    
+<b>Rewards</b>
+
+<img src="https://cdn.shopify.com/s/files/1/0885/7466/products/smiley-decal_1024x1024.png?v=1434998018" alt="Smiley face" height="42" width="42">
+
+
+</div>
+</div>
+
+</html>

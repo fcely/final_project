@@ -1,0 +1,83 @@
+<body>
+
+
+<div class="row">
+
+    <div class="col-3 mt-2 card">
+<b> Create User</b>
+<form class=" p-1 ml-2 mr-2 " action="/new/user"  method="POST"  id="new_user_form">
+    <fieldset>
+  
+    <div class="form-group">
+  
+      <input id="group_id" name="group_id" type="hidden" value="{{user.0.group_id}}">
+      
+      <label class="col-md-12 control-label">First Name</label>  
+      <input name="first_name"  class="form-control" type="text"> 
+
+      <label class="col-md-12 control-label">Last Name</label>  
+      <input name="last_name"  class="form-control" type="text"> 
+
+      <label class="col-md-12 control-label">Nickname</label>  
+      <input name="nickname"  class="form-control" type="text"> 
+  
+      <label class="col-md-12 control-label">E-mail</label>  
+      <input name="email"  class="form-control" type="text"> 
+
+      <label class="col-md-12 control-label">User Type</label>  
+      <input name="user_type"  class="form-control" type="text"> 
+             
+        
+    </div>
+    
+    <!-- Button -->
+    <div class="form-group">
+    <button type="submit" class="btn btn-primary" >Add </button>
+    </div>
+    
+    </fieldset>
+    </form> 
+
+    </div>
+
+
+    <div class="col-5 card m-2">
+
+
+
+<table class="table table-hover tablesorter" id="myTable">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Nickname</th> 
+        
+                  <th scope="col"></th> 
+                  <th scope="col"></th> 
+                </tr>
+              </thead>
+              
+              <tbody class="info table-hover">
+ {{#each user}}
+  	            <tr class="tableRow " data-id="{{this.user_id}}">
+                    <td> {{this.nickname}} </td>
+                    
+                    <td><input type="button" user_id={{this.user_id}}  class="user_accounts float-right" onclick="location.href='/accounts/{{this.user_id}}'" value="Accounts"/></td>
+              
+                </tr>
+
+		
+  {{/each}}
+
+</tbody>
+
+</table>
+    </div>
+
+
+</div>
+
+
+
+</body>
+
+
+

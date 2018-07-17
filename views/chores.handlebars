@@ -1,0 +1,82 @@
+<body>
+
+
+<div class="row">
+
+    <div class=" card col-3 mt-2">
+<b> Add Chore</b>
+<form class=" p-4 " action="/new/chore"  method="POST"  id="new_chore_form">
+    <fieldset>
+  
+    <div class="form-group">
+  
+      <input id="group_id" name="group_id" type="hidden" value="{{group_id}}">
+      <input id="group_id" name="status" type="hidden" value="0">
+      
+      <label class="col-md-12 control-label">Chore</label>  
+      <input name="chore_desc"  class="form-control" type="text"> 
+
+      <label class="col-md-12 control-label">Due_Date</label>  
+      <input name="due_date"  class="form-control" type="date"> 
+
+      <label class="col-md-12 control-label">Amount</label>  
+      <input name="chore_amt"  class="form-control" type="money"> 
+        
+    </div>
+    
+    <!-- Button -->
+    <div class="form-group">
+    <button type="submit" class="btn btn-primary" >Add </button>
+    </div>
+    
+    </fieldset>
+    </form> 
+
+    </div>
+
+
+    <div class="col-8 card m-2">
+
+
+
+<table class="table table-hover tablesorter" id="myTable">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Chore</th> 
+                  <th scope="col">Date</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Assigned_To</th> 
+                  <th scope="col">Amount</th>
+                  <th scope="col"></th> 
+                  <th scope="col"></th> 
+                </tr>
+              </thead>
+              
+              <tbody class="info table-hover">
+ {{#each chore}}
+  	            <tr class="tableRow " data-id="{{this.chore_id}}">
+                    <td> {{this.chore_desc}} </td>
+                    <td> {{moment this.due_date "MM/DD/YY"}}</td>
+                    <td> {{this.status}} </td>
+                    <td> {{this.user_id}} </td>
+                    <td> {{this.chore_amt}} </td>
+                    <td><input type="button" user_id={{this.chore_id}}  class=" float-right" onclick="location.href='/chores/delete/{{this.chore_id}}/{{this.group_id}}'" value="Delete"/></td>
+                </tr>
+
+		
+  {{/each}}
+
+</tbody>
+
+</table>
+    </div>
+
+
+</div>
+
+
+
+</body>
+
+
+

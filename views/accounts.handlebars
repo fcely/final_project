@@ -1,0 +1,181 @@
+<body>
+
+
+<div class="row">
+
+    <div class="col-2  card">
+<b> Create Account</b>
+<form class=" p-4 " action="/new/account"  method="POST"  id="new_account_form">
+    <fieldset>
+  
+    <div class="form-group">
+
+      <input id="user_id" name="user_id" type="hidden" value="{{user_id}}">
+      <input id="balance" name="balance" type="hidden" value="0">
+  
+      <label class="col-md-12 control-label">Account Name</label>  
+      <input name="account_desc"  class="form-control" type="text"> 
+    </div>
+    <!-- Button -->
+    <div class="form-group">
+    <button type="submit" class="btn btn-primary" >Add </button>
+    </div>
+    
+    </fieldset>
+    </form> 
+
+    </div>
+
+    <div class="col-8 card ml-2">
+<b>Accounts</b>
+<table class="table table-hover tablesorter" id="myTable">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Account Number</th> 
+                  <th scope="col">Account Description</th> 
+                  <th scope="col">Balance</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Description</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              
+              <tbody class="info table-hover">
+ {{#each account}}
+  	<tr class="tableRow " data-id="{{this.account_id}}">
+      <td> {{this.account_id}} </td>
+	    <td> {{this.account_desc}} </td>
+      <td> {{this.balance}} </td>
+      <td> <input type="text" id="amt{{this.account_id}}" placeholder="trx_amt"> </td>
+      <td> <input type="text" id="desc{{this.account_id}}" placeholder="trx_details"> </td>
+      <td> <button account_id="{{this.account_id}}" user_id={{this.user_id}} balance={{this.balance}}  class="deposit float-right ">Deposit</button> </td>
+      <td> <button account_id="{{this.account_id}}" user_id={{this.user_id}} balance={{this.balance}}  class="withdrawal float-right ">Withdraw</button> </td>  
+    </tr>
+
+		
+{{/each}}
+
+</tbody>
+
+</table>
+    
+
+
+
+
+
+
+
+    <div class="card ">
+
+<b>Requests</b>
+<table class="table table-hover tablesorter" id="myTable">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Reason</th> 
+                  <th scope="col">Amount</th> 
+                  <th></th>
+                  <th></th>
+               </tr>
+              </thead>
+              
+              <tbody class="info table-hover">
+ {{#each request}}
+  	<tr class="tableRow " data-id="{{this.request_id}}">
+      
+	    <td> {{this.request_desc}} </td>
+      <td> {{this.request_amt}} </td>
+      <td> <button account_id="{{this.account_id}}" user_id={{this.user_id}} balance={{this.balance}}  class="deposit float-right ">Approve</button> </td>
+      <td> <button account_id="{{this.account_id}}" user_id={{this.user_id}} balance={{this.balance}}  class="withdrawal float-right ">Deny</button> </td>  
+    </tr>
+
+		
+{{/each}}
+
+</tbody>
+
+</table>
+
+</div>
+
+    </div>
+</div>
+
+</body>
+
+
+
+<script>
+
+$(document).ready(function(){
+
+$(document).on("click",".deposit",function(){            
+
+var amount_id='amt'+$(this).attr('account_id')
+var amount= $('#'+ amount_id).val()
+var desc_id='desc'+$(this).attr('account_id')
+var desc= $('#'+ desc_id).val()
+
+jQuery.ajax({
+          url: "/transaction",
+          type: "POST",
+          data: {account_id: $(this).attr("account_id"),  
+          trx_amt:amount, 
+          trx_type:"Deposit", 
+          trx_desc:desc, 
+          beg_bal:parseFloat($(this).attr("balance")), 
+          end_bal:parseFloat($(this).attr("balance"))+parseFloat(amount),
+          user_id:$(this).attr("user_id") },
+          dataType: "json",
+          beforeSend: function(x) {
+            if (x && x.overrideMimeType) {
+              x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+          },
+          success: function(result) {
+         console.log("Ajax Object")
+          console.log(result)
+         location.reload()        
+          }
+});
+
+});
+
+
+$(document).on("click",".withdrawal",function(){            
+
+var amount_id='amt'+$(this).attr('account_id')
+var amount= $('#'+ amount_id).val()
+var desc_id='desc'+$(this).attr('account_id')
+var desc= $('#'+ desc_id).val()
+
+jQuery.ajax({
+          url: "/transaction",
+          type: "POST",
+          data: {account_id: $(this).attr("account_id"),  
+          trx_amt:amount, 
+          trx_type:"Withdrawal", 
+          trx_desc:desc, 
+          beg_bal:parseFloat($(this).attr("balance")), 
+          end_bal:parseFloat($(this).attr("balance"))-parseFloat(amount),
+          user_id:$(this).attr("user_id") },
+          dataType: "json",
+          beforeSend: function(x) {
+            if (x && x.overrideMimeType) {
+              x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+          },
+          success: function(result) {
+         console.log("Ajax Object")
+          console.log(result)
+         location.reload()        
+          }
+});
+
+});
+
+
+
+    });
+</script>
